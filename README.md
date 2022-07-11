@@ -8,6 +8,8 @@ You must install [google-chrome](https://www.google.com/chrome/) on your system 
 
 ## Usage
 
+Create a json file with your IOC credentials and the list of courses you want to inspect. Check it out the `config.json` as example.
+
 ``` shell
-$ ruby dropo.rb <usename> <password> '['<course_id0>', '<course_id1>',...]'
+$ ruby dropo.rb <your_credentials.json>
 ```

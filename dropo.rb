@@ -4,10 +4,15 @@ require "selenium-webdriver"
 require "json"
 
 # parse arguments
-# @TODO: Handle with error args 
+# @TODO: Handle with error args
 # @TODO: Add support for json configs
-username, password, _courses = ARGV
-courses = JSON.parse(_courses)
+# username, password, _courses = ARGV
+# courses = JSON.parse(_courses)
+file = File.read(ARGV[0])
+credentials = JSON.parse(file)
+username = credentials["username"]
+password = credentials["password"]
+courses  = credentials["courses"]
 
 # setup and configure the driver to run in headless mode
 service = Selenium::WebDriver::Service.chrome(path: './vendor/chromedriver')
@@ -15,7 +20,7 @@ options = Selenium::WebDriver::Chrome::Options.new
 options.add_argument('--headless')
 options.add_argument('--window-size=1280,1024') # interact with campus in desktop layout
 driver = Selenium::WebDriver.for :chrome, service: service, options: options
-driver.manage.timeouts.implicit_wait = 500
+driver.manage.timeouts.implicit_wait = 30
 exception = Selenium::WebDriver::Error::NoSuchElementError
 wait = Selenium::WebDriver::Wait.new(timeout: 30, interval: 5, message: 'Timed out after 30 sec', ignore: exception)
 
@@ -23,7 +28,7 @@ begin
   # Visit IOC site and login
   driver.get "https://ioc.xtec.cat"
   puts "[i]: #{driver.title}"
-  puts "[i]: #{driver.current_url}"  
+  puts "[i]: #{driver.current_url}"
   login_button = wait.until {
     el = driver.find_element(:xpath, '//*[@id="login-campus-large"]')
     el if el.displayed?
@@ -46,7 +51,7 @@ begin
   #   el = driver.find_element(:xpath, list_courses)
   #   el if el.displayed?
   # }
-  
+
   # Visit a list of owned courses and take a screenshot of them
   for id_course in courses
      driver.get "https://ioc.xtec.cat/campus/course/view.php?id=#{id_course}"
@@ -86,7 +91,7 @@ begin
      # visit content page and take a picture
      for url in url_pages
        driver.get url
-       puts "[i]: Taking a picture of #{driver.title} page" 
+       puts "[i]: Taking a picture of #{driver.title} page"
        wait.until {
          el = driver.find_element(id: 'page-content')
          el if el.displayed?
@@ -98,8 +103,7 @@ begin
        driver.save_screenshot("./screenshot_#{id_course}_#{id_picture}.png")
      end
   end
-  
+
 ensure
   driver.quit
 end
-
