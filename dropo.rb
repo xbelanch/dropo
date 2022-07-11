@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require "selenium-webdriver"
-require "webdrivers"
 require "json"
 
 # parse arguments
@@ -45,9 +44,8 @@ begin
     el = driver.find_element(:xpath, list_courses)
     el if el.displayed?
   }
-
+  
   # Visit a list of owned courses and take a screenshot of them
-  # id_courses = ['957', '11817', '11819', '11186', '11187']
   for id in courses
      driver.get "https://ioc.xtec.cat/campus/course/view.php?id=#{id}"
      course = wait.until {
@@ -70,7 +68,4 @@ begin
 ensure
   driver.quit
 end
-
-
-
 
