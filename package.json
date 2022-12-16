@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "selenium-webdriver": "^4.7.1"
+  },
+  "name": "dropo",
+  "description": "A simple and dumb tool that collects and parse data from IOC courses thanks to [Selenium](https://www.selenium.dev/) and [Ruby](https://www.ruby-lang.org/en/).",
+  "version": "1.0.0",
+  "main": "dropo.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xbelanch/dropo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xbelanch/dropo/issues"
+  },
+  "homepage": "https://github.com/xbelanch/dropo#readme"
+}
